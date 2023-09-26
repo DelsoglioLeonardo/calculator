@@ -21,6 +21,8 @@ namespace calculator
             DecimalPoint,
             PlusMinusSign,
             BackSpace,
+            ClearAll,
+            ClearEntry,
             Undefined
         }
         public struct btnStruct
@@ -37,7 +39,7 @@ namespace calculator
         }
         private btnStruct[,] buttons =
         {
-            { new btnStruct('%'), new btnStruct('\u0152'), new btnStruct('C'), new btnStruct('\u232b',symbolType.BackSpace)},
+            { new btnStruct('%'), new btnStruct('\u0152',symbolType.ClearEntry), new btnStruct('C',symbolType.ClearAll), new btnStruct('\u232b',symbolType.BackSpace)},
             { new btnStruct('\u215f'),new btnStruct('\u00b2'),new btnStruct('\u221a'),new btnStruct('\u00f7')},
             { new btnStruct('7',symbolType.Number,true),new btnStruct('8', symbolType.Number,true),new btnStruct('9', symbolType.Number, true),new btnStruct('\u00d7',symbolType.Operator)},
             { new btnStruct('4', symbolType.Number,true),new btnStruct('5', symbolType.Number,true),new btnStruct('6', symbolType.Number, true),new btnStruct('-', symbolType.Operator)},
@@ -82,47 +84,60 @@ namespace calculator
                 posY += btnHeight;
             }
         }
-
         private void MyButton_Click(object sender, EventArgs e)
         {
-            Button clickedButton=(Button)sender;
-            btnStruct clickedButtonStruct=(btnStruct)clickedButton.Tag;
-            switch(clickedButtonStruct.type)
+            Button clickedButton = (Button)sender;
+            btnStruct clickedButtonStruct = (btnStruct)clickedButton.Tag;
+            if (clickedButtonStruct.type == symbolType.Number)
+            {
+
+            }
+            switch (clickedButtonStruct.type)
             {
                 case symbolType.Number:
                     if (lblResult.Text == "0") lblResult.Text = "";
                     lblResult.Text += clickedButton.Text;
                     break;
                 case symbolType.Operator:
+
                     break;
                 case symbolType.DecimalPoint:
-                    if(lblResult.Text.IndexOf(",")==-1)
+                    if (lblResult.Text.IndexOf(",") == -1)
                         lblResult.Text += clickedButton.Text;
                     break;
                 case symbolType.PlusMinusSign:
-                    if(lblResult.Text!="0")
-                    {
-                        if(lblResult.Text.IndexOf("-") == -1)
-                        {
+                    if (lblResult.Text != "0")
+                        if (lblResult.Text.IndexOf("-") == -1)
                             lblResult.Text = "-" + lblResult.Text;
-                        }
                         else
-                        {
-                            lblResult.Text=lblResult.Text.Substring(1);
-                        }
-                    }
+                            lblResult.Text = lblResult.Text.Substring(1);
                     break;
                 case symbolType.BackSpace:
-                    lblResult.Text=lblResult.Text.Substring(0,(int)lblResult.Text.Length - 1);
+                    lblResult.Text = lblResult.Text.Substring(0, lblResult.Text.Length - 1);
                     if (lblResult.Text.Length == 0 || lblResult.Text == "-0")
                         lblResult.Text = "0";
+                    break;
+                case symbolType.ClearAll:
+                    lblResult.Text = "0";
                     break;
                 case symbolType.Undefined:
                     break;
                 default:
                     break;
             }
-            
+        }
+        private void lblResult_TextChanged(object sender, EventArgs e)
+        {
+            if (lblResult.Text.Length > 16) lblResult.Text = lblResult.Text.Substring(0, 16);
+            if(lblResult.Text.Length>11)
+            {
+                float delta = lblResult.Text.Length - 11;
+                lblResult.Font = new Font("Segoe UI", 36-delta*(float)2.8, FontStyle.Regular);
+            }
+            else
+            {
+                lblResult.Font = new Font("Segoe UI", 36, FontStyle.Regular);
+            }
         }
     }
 }
