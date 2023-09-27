@@ -48,14 +48,17 @@ namespace calculator
             { new btnStruct('\u00b1',symbolType.PlusMinusSign),new btnStruct('0', symbolType.Number,true),new btnStruct(',', symbolType.DecimalPoint,true),new btnStruct('=', symbolType.Operator)}
         };
 
+        float lblResultBaseFormSize;
+        const int lblResultWidthMargin = 24;
+        const int lblResultMaxDigit = 25;
         public Form1()
         {
             InitializeComponent();
+            lblResultBaseFormSize = lblResult.Font.Size;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             makeButtons(buttons.GetLength(0), buttons.GetLength(1));
         }
 
@@ -140,16 +143,13 @@ namespace calculator
                 lblResult.Text = stOut;
                 
             }
-            if (lblResult.Text.Length > 20) lblResult.Text = lblResult.Text.Substring(0, 20);
-            if(lblResult.Text.Length>11)
-            {
-                float newSize = lblResult.Font.Size * (float)0.96;
-                lblResult.Font = new Font("Segoe UI", newSize, FontStyle.Regular);
-            }
-            else
-            {
-                lblResult.Font = new Font("Segoe UI", 36, FontStyle.Regular);
-            }
+            if (lblResult.Text.Length > lblResultMaxDigit) lblResult.Text = lblResult.Text.Substring(0, lblResultMaxDigit);
+
+            int textWidth = TextRenderer.MeasureText(lblResult.Text, lblResult.Font).Width;
+            float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width-20)/textWidth);
+            if (newSize > lblResultBaseFormSize) newSize = lblResultBaseFormSize;
+            lblResult.Font = new Font("Segoe UI", newSize, FontStyle.Regular);
+           
         }
     }
 }
