@@ -136,6 +136,10 @@ namespace calculator
                     break;
                 case symbolType.ClearAll:
                     lblResult.Text = "0";
+                    operand1 = 0;
+                    operand2 = 0;
+                    result = 0;
+                    lastOperator = ' ';
                     break;
                 case symbolType.Undefined:
                     break;
