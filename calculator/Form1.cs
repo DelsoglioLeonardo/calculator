@@ -132,6 +132,11 @@ namespace calculator
         }
         private void lblResult_TextChanged(object sender, EventArgs e)
         {
+            if(lblResult.Text=="-")
+            {
+                lblResult.Text = "0";
+                return;
+            }
             if (lblResult.Text.Length > 0)
             {
                 double num = double.Parse(lblResult.Text);String stOut = "";
@@ -146,7 +151,7 @@ namespace calculator
             if (lblResult.Text.Length > lblResultMaxDigit) lblResult.Text = lblResult.Text.Substring(0, lblResultMaxDigit);
 
             int textWidth = TextRenderer.MeasureText(lblResult.Text, lblResult.Font).Width;
-            float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width-20)/textWidth);
+            float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width-lblResultWidthMargin)/textWidth);
             if (newSize > lblResultBaseFormSize) newSize = lblResultBaseFormSize;
             lblResult.Font = new Font("Segoe UI", newSize, FontStyle.Regular);
            
