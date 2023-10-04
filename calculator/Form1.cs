@@ -20,6 +20,7 @@ namespace calculator
         {
             Number,
             Operator,
+            SpecialOperator,
             DecimalPoint,
             PlusMinusSign,
             BackSpace,
@@ -42,7 +43,7 @@ namespace calculator
         private btnStruct[,] buttons =
         {
             { new btnStruct('%'), new btnStruct('\u0152',symbolType.ClearEntry), new btnStruct('C',symbolType.ClearAll), new btnStruct('\u232b',symbolType.BackSpace)},
-            { new btnStruct('\u215f'),new btnStruct('\u00b2'),new btnStruct('\u221a'),new btnStruct('\u00f7',symbolType.Operator)},
+            { new btnStruct('\u215f',symbolType.SpecialOperator),new btnStruct('\u00b2'),new btnStruct('\u221a'),new btnStruct('\u00f7',symbolType.Operator)},
             { new btnStruct('7',symbolType.Number,true),new btnStruct('8', symbolType.Number,true),new btnStruct('9', symbolType.Number, true),new btnStruct('\u00d7',symbolType.Operator)},
             { new btnStruct('4', symbolType.Number,true),new btnStruct('5', symbolType.Number,true),new btnStruct('6', symbolType.Number, true),new btnStruct('-', symbolType.Operator)},
             { new btnStruct('1', symbolType.Number,true),new btnStruct('2', symbolType.Number, true),new btnStruct('3', symbolType.Number, true),new btnStruct('+', symbolType.Operator)},
@@ -109,7 +110,7 @@ namespace calculator
                     lblResult.Text += clickedButton.Text;
                     break;
                 case symbolType.Operator:
-                    if(lastButtonClicked.type==symbolType.Operator && lastButtonClicked.Content!='=')
+                    if (lastButtonClicked.type==symbolType.Operator && lastButtonClicked.Content!='=')
                     {
                         lastOperator = clickedButtonStruct.Content;
                     }
@@ -135,13 +136,19 @@ namespace calculator
                     }
                     break;
                 case symbolType.ClearAll:
-                    lblResult.Text = "0";
-                    operand1 = 0;
-                    operand2 = 0;
-                    result = 0;
-                    lastOperator = ' ';
+                    clearAllFunction();
                     break;
                 case symbolType.Undefined:
+                    break;
+                case symbolType.ClearEntry:
+                    if (lastButtonClicked.Content == '=')
+                        clearAllFunction();
+                    else
+                        lblResult.Text = "0";
+                    break;
+
+                case symbolType.SpecialOperator:
+                    ManageSpecialOperator(clickedButtonStruct);
                     break;
                 default:
                     break;
@@ -150,6 +157,27 @@ namespace calculator
             lastButtonClicked = clickedButtonStruct;
         }
 
+        private void clearAllFunction()
+        {
+            lblResult.Text = "0";
+            operand1 = 0;
+            operand2 = 0;
+            result = 0;
+            lastOperator = ' ';
+        }
+        private void ManageSpecialOperator(btnStruct clickedButtonStruct)
+        {
+            operand2 = decimal.Parse(lblResult.Text);
+            switch (clickedButtonStruct.Content)
+            {
+                case '\u215F':
+                    result = 1 / operand2;
+                    break;
+                default:
+                    break;
+            }
+            lblResult.Text = result.ToString();
+        }
         private void ManageOperator(btnStruct clickedButtonStruct)
         {
             if(lastOperator== ' ')
@@ -213,7 +241,6 @@ namespace calculator
             float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width-lblResultWidthMargin)/textWidth);
             if (newSize > lblResultBaseFormSize) newSize = lblResultBaseFormSize;
             lblResult.Font = new Font("Segoe UI", newSize, FontStyle.Regular);
-           
         }
     }
 }
