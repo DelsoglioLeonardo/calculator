@@ -67,6 +67,7 @@ namespace calculator
         private void Form1_Load(object sender, EventArgs e)
         {
             makeButtons(buttons.GetLength(0), buttons.GetLength(1));
+            lblOperazioneInCorso.Text = "";
         }
 
         private void makeButtons(int rows, int cols)
@@ -135,7 +136,7 @@ namespace calculator
                     }
                     break;
                 case symbolType.BackSpace:
-                if(lastButtonClicked.type!=symbolType.Operator)
+                if(lastButtonClicked.type!=symbolType.Operator && lastButtonClicked.type!=symbolType.SpecialOperator)
                   {
                     lblResult.Text = lblResult.Text.Substring(0, lblResult.Text.Length - 1);
                     if (lblResult.Text.Length == 0 || lblResult.Text == "-0")
@@ -168,22 +169,29 @@ namespace calculator
             operand2 = 0;
             result = 0;
             lastOperator = ' ';
+            lblOperazioneInCorso.Text = "";
         }
         private void ManageSpecialOperator(btnStruct clickedButtonStruct)
         {
                 operand2 = decimal.Parse(lblResult.Text);
+                decimal aus = operand2;
                 switch (clickedButtonStruct.Content)
                 {
                     case '%':
                         result = operand1 * operand2 / 100;
                         break;
                     case '\u215F':// 1/x
+                        lblOperazioneInCorso.Text = aus +lastOperator.ToString()+ "1/(" + operand2 + ")";
                         result = 1 / operand2;
                         break;
                     case '\u00b2':// x^2
                         result = operand2*operand2;
                         break;
                     case '\u221a':// sqr(x)
+                    if (lblOperazioneInCorso.Text == "")
+                        lblOperazioneInCorso.Text = "sqrt(" + operand2.ToString() + ")";
+                    else
+                        lblOperazioneInCorso.Text="sqrt("+lblOperazioneInCorso.Text + ")";
                         result = (decimal)Math.Sqrt((double)operand2);
                         break;
                     default:
@@ -191,16 +199,19 @@ namespace calculator
                 }
                 lblResult.Text = result.ToString();
         }
+
         private void ManageOperator(btnStruct clickedButtonStruct)
         {
             if(lastOperator== ' ')
             {
                 operand1 = decimal.Parse(lblResult.Text);
                 if(clickedButtonStruct.Content!='=')lastOperator = clickedButtonStruct.Content;
+                lblOperazioneInCorso.Text = operand1.ToString()+" "+lastOperator.ToString();
             }
             else
             {
                 if(lastButtonClicked.Content!= '=') operand2 = decimal.Parse(lblResult.Text);
+                lblOperazioneInCorso.Text += operand2.ToString() + " =";
                 switch (lastOperator)
                 {
                     case '+':
@@ -233,16 +244,17 @@ namespace calculator
         {
             if (lblResult.Text.Length > 0)
             {
-                double num = double.Parse(lblResult.Text);String stOut = "";
+                double num = double.Parse(lblResult.Text);string stOut = "";
                 NumberFormatInfo nfi = new CultureInfo("it-IT", false).NumberFormat;
                 int decimalSeparatorPosition = lblResult.Text.IndexOf(",");
-                nfi.NumberDecimalDigits = decimalSeparatorPosition == -1 ? 0 : lblResult.Text.Length-decimalSeparatorPosition-1;
-                stOut = num.ToString("N",nfi);
+                nfi.NumberDecimalDigits = decimalSeparatorPosition == -1 ? 0
+                    : lblResult.Text.Length-decimalSeparatorPosition-1;
+                stOut = num.ToString("N", nfi);
                 if (lblResult.Text.IndexOf(",") == lblResult.Text.Length - 1) stOut += ",";
                 lblResult.Text = stOut;
-                
             }
-            if (lblResult.Text.Length > lblResultMaxDigit) lblResult.Text = lblResult.Text.Substring(0, lblResultMaxDigit);
+            if (lblResult.Text.Length > lblResultMaxDigit) 
+                lblResult.Text = lblResult.Text.Substring(0, lblResultMaxDigit);
 
             int textWidth = TextRenderer.MeasureText(lblResult.Text, lblResult.Font).Width;
             float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width-lblResultWidthMargin)/textWidth);

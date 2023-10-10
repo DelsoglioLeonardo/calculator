@@ -30,6 +30,8 @@
         {
             this.lblResult = new System.Windows.Forms.Label();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.lblOperazioneInCorso = new System.Windows.Forms.Label();
+            this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblResult
@@ -46,11 +48,22 @@
             // 
             // panelTop
             // 
+            this.panelTop.Controls.Add(this.lblOperazioneInCorso);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(320, 30);
             this.panelTop.TabIndex = 1;
+            // 
+            // lblOperazioneInCorso
+            // 
+            this.lblOperazioneInCorso.Font = new System.Drawing.Font("Segoe UI Light", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOperazioneInCorso.Location = new System.Drawing.Point(41, 0);
+            this.lblOperazioneInCorso.Name = "lblOperazioneInCorso";
+            this.lblOperazioneInCorso.Size = new System.Drawing.Size(276, 30);
+            this.lblOperazioneInCorso.TabIndex = 0;
+            this.lblOperazioneInCorso.Text = "l";
+            this.lblOperazioneInCorso.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form1
             // 
@@ -65,6 +78,7 @@
             this.ShowIcon = false;
             this.Text = "calcolatrice";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.panelTop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -73,6 +87,7 @@
 
         private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Label lblOperazioneInCorso;
     }
 }
 
