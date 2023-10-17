@@ -239,27 +239,94 @@ namespace calculator
                 lblResult.Text = result.ToString();
             }
         }
-
+        bool lavorando = false;
         private void lblResult_TextChanged(object sender, EventArgs e)
         {
-            if (lblResult.Text.Length > 0)
+            if (!lavorando)
             {
-                double num = double.Parse(lblResult.Text);string stOut = "";
-                NumberFormatInfo nfi = new CultureInfo("it-IT", false).NumberFormat;
-                int decimalSeparatorPosition = lblResult.Text.IndexOf(",");
-                nfi.NumberDecimalDigits = decimalSeparatorPosition == -1 ? 0
-                    : lblResult.Text.Length-decimalSeparatorPosition-1;
-                stOut = num.ToString("N", nfi);
-                if (lblResult.Text.IndexOf(",") == lblResult.Text.Length - 1) stOut += ",";
-                lblResult.Text = stOut;
-            }
-            if (lblResult.Text.Length > lblResultMaxDigit) 
-                lblResult.Text = lblResult.Text.Substring(0, lblResultMaxDigit);
+                if (lblResult.Text.Length > 0)
+                {
+                    double num = double.Parse(lblResult.Text); string stOut = "";
+                    NumberFormatInfo nfi = new CultureInfo("it-IT", false).NumberFormat;
+                    int decimalSeparatorPosition = lblResult.Text.IndexOf(",");
+                    nfi.NumberDecimalDigits = decimalSeparatorPosition == -1 ? 0
+                        : lblResult.Text.Length - decimalSeparatorPosition - 1;
+                    stOut = num.ToString("N", nfi);
+                    char ultimoCarattereSt = stOut[stOut.Length - 1];
+                    char ultimoCarattereLbl = lblResult.Text.Length > 0 ? lblResult.Text[lblResult.Text.Length - 1] : '\0';
+                    if (ultimoCarattereSt.ToString() != ultimoCarattereLbl.ToString())
+                    {
+                        lavorando = true;
+                        int lunghezza = lblResult.Text.Length;
+                        int posVirgola=-999;
+                        string copia="";
+                        int i = 0;
+                        while(i!=lunghezza)
+                        {
+                             if (lblResult.Text[i] !='.')
+                                 copia += lblResult.Text[i];
+                             if(lblResult.Text[i]==',')
+                                 posVirgola = i;
+                             i++;
+                        }
+                        int lunghezzaCopia = copia.Length;
+                        if (lunghezzaCopia % 3==0)
+                        {
+                            if (posVirgola == -999)
+                            {
+                                lblResult.Text = "";
+                                i = 0;
+                                while(i!= copia.Length)
+                                {
+                                    lblResult.Text += copia[i];
+                                    i++;
+                                    if(i%3==0 && i != 0)
+                                    {
+                                        lblResult.Text += ".";
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (posVirgola == -999)
+                            {
+                                int diff = lunghezzaCopia % 3;
+                                lblResult.Text = "";
+                                i = 0;
+                                while (i != copia.Length)
+                                {
+                                    lblResult.Text += copia[i];
+                                    i++;
+                                    if(i==diff)
+                                    {
+                                        lblResult.Text += ".";
+                                    }
+                                    else if ((i-diff) % 3 == 0 && i != 0 && i!=copia.Length)
+                                    {
+                                        lblResult.Text += ".";
+                                    }
+                                }
+                            }
+                        }
+                        lavorando = false;
+                    }
+                    else
+                    {
+                        if (lblResult.Text.IndexOf(",") == lblResult.Text.Length - 1) stOut += ",";
+                        lblResult.Text = stOut;
+                    }
+                }
+                if (lblResult.Text.Length > lblResultMaxDigit)
+                    lblResult.Text = lblResult.Text.Substring(0, lblResultMaxDigit);
 
-            int textWidth = TextRenderer.MeasureText(lblResult.Text, lblResult.Font).Width;
-            float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width-lblResultWidthMargin)/textWidth);
-            if (newSize > lblResultBaseFontSize) newSize = lblResultBaseFontSize;
-            lblResult.Font = new Font("Segoe UI", newSize, FontStyle.Regular);
+                int textWidth = TextRenderer.MeasureText(lblResult.Text, lblResult.Font).Width;
+                float newSize = lblResult.Font.Size * (((float)lblResult.Size.Width - lblResultWidthMargin) / textWidth);
+                if (newSize > lblResultBaseFontSize) newSize = lblResultBaseFontSize;
+                lblResult.Font = new Font("Segoe UI", newSize, FontStyle.Regular);
+            }
         }
+
+      
     }
 }
