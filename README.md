@@ -10,7 +10,10 @@ Il nostro progetto vanta le seguenti caratteristiche:
 
 Interfaccia Intuitiva: Un'interfaccia utente semplice e intuitiva, progettata per facilitare l'uso anche per gli utenti meno esperti.
 
-### Funzionalità Avanzate
-Oltre alle operazioni di base come addizione, sottrazione, moltiplicazione e divisione, la calcolatrice può gestire operazioni più complesse come radici quadrate, potenze, e molto altro.
+Funzionalità Avanzate: Oltre alle operazioni di base come addizione, sottrazione, moltiplicazione e divisione, la calcolatrice può gestire operazioni più complesse come radici quadrate, potenze, e molto altro.
+
+# Sviluppo
+Per la creazione ho usato il linguaggio c# in visuale con i form.
+Nella calcolatrice oltre ai pulsanti di base sono stati implementati i pulsanti con operatori speciale e anche la label che mostra la cronologia dell'ultima operazione.
 
 Grazie per aver scelto la nostra calcolatrice!
