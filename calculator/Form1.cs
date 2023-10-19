@@ -182,17 +182,24 @@ namespace calculator
                         result = operand1 * operand2 / 100;
                         break;
                     case '\u215F':// 1/x
-                        lblOperazioneInCorso.Text = aus +lastOperator.ToString()+ "1/(" + operand2 + ")";
+                        if (lblOperazioneInCorso.Text == "")
+                            lblOperazioneInCorso.Text = "1/(" + operand2.ToString() + ")";
+                        else
+                            lblOperazioneInCorso.Text = "1/(" + lblOperazioneInCorso.Text + ")";
                         result = 1 / operand2;
                         break;
                     case '\u00b2':// x^2
+                        if (lblOperazioneInCorso.Text == "")
+                            lblOperazioneInCorso.Text = "sqr(" + operand2.ToString() + ")";
+                        else
+                        lblOperazioneInCorso.Text = "sqr(" + lblOperazioneInCorso.Text + ")";
                         result = operand2*operand2;
                         break;
                     case '\u221a':// sqr(x)
                     if (lblOperazioneInCorso.Text == "")
-                        lblOperazioneInCorso.Text = "sqrt(" + operand2.ToString() + ")";
+                        lblOperazioneInCorso.Text = "√(" + operand2.ToString() + ")";
                     else
-                        lblOperazioneInCorso.Text="sqrt("+lblOperazioneInCorso.Text + ")";
+                        lblOperazioneInCorso.Text= "√(" + lblOperazioneInCorso.Text + ")";
                         result = (decimal)Math.Sqrt((double)operand2);
                         break;
                     default:
