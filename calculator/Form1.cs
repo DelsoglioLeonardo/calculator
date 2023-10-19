@@ -196,12 +196,12 @@ namespace calculator
                         result = operand2*operand2;
                         break;
                     case '\u221a':// sqr(x)
-                    if (lblOperazioneInCorso.Text == "")
-                        lblOperazioneInCorso.Text = "√(" + operand2.ToString() + ")";
-                    else
-                        lblOperazioneInCorso.Text= "√(" + lblOperazioneInCorso.Text + ")";
-                        result = (decimal)Math.Sqrt((double)operand2);
-                        break;
+                        if (lblOperazioneInCorso.Text == "")
+                            lblOperazioneInCorso.Text = "√(" + operand2.ToString() + ")";
+                        else
+                            lblOperazioneInCorso.Text= "√(" + lblOperazioneInCorso.Text + ")";
+                            result = (decimal)Math.Sqrt((double)operand2);
+                            break;
                     default:
                         break;
                 }

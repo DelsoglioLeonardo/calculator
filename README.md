@@ -1,21 +1,16 @@
-# calcolatrice made by Delsoglio
-### Progetto realizzato dalla classe 4B INF 23/24
-Lo scopo del progetto **calculator** è produrre un clone...
+# Calcolatrice Realizzata da Delsoglio
+Progetto Creato dalla Classe 4B INF 23/24
+Benvenuti nel progetto Calculator realizzato dalla classe 4B INF 23/24! 
 
-La classe ~~3 INF B~~ 4 INF B è composta da 22 studenti
-1. Alessandria Elia
-2. Armellini Luca
-3. Belba Jurghen
-4. ...
+### Scopo del Progetto
+Lo scopo del nostro progetto Calculator è fornire un clone avanzato di una calcolatrice simile a quella di windows con tutte le funzioni che nella versione normale.
 
-Gli step realizzativi saranno i seguenti: 
+### Caratteristiche Principali
+Il nostro progetto vanta le seguenti caratteristiche:
 
-* presa di confidenza con Git e gli altri strumenti di lavoro;
-* creazione del progetto Windows Forms dotNet;
-* realizzazione del codice
-    -creazione dinamica dei pulsanti di comando
-    -programmazione comune dell'evento click
-    -....
+Interfaccia Intuitiva: Un'interfaccia utente semplice e intuitiva, progettata per facilitare l'uso anche per gli utenti meno esperti.
 
-Tramite il comando `git status` è possibiole visonare la 
-condizione del nostro repository git locale
+### Funzionalità Avanzate
+Oltre alle operazioni di base come addizione, sottrazione, moltiplicazione e divisione, la calcolatrice può gestire operazioni più complesse come radici quadrate, potenze, e molto altro.
+
+Grazie per aver scelto la nostra calcolatrice!
