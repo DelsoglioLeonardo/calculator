@@ -53,6 +53,7 @@ namespace calculator
         float lblResultBaseFontSize;
         const int lblResultWidthMargin = 24;
         const int lblResultMaxDigit = 25;
+        private bool haFattoOperazioni = false;
 
         char lastOperator = ' ';
         decimal operand1,operand2,result;
@@ -270,43 +271,23 @@ namespace calculator
                              i++;
                         }
                         int lunghezzaCopia = copia.Length;
-                        if (lunghezzaCopia % 3==0)
+                        if (posVirgola == -999)
                         {
-                            if (posVirgola == -999)
-                            {
-                                lblResult.Text = "";
-                                i = 0;
-                                while(i!= copia.Length)
-                                {
-                                    lblResult.Text += copia[i];
-                                    i++;
-                                    if(i%3==0 && i != 0)
-                                    {
-                                        lblResult.Text += ".";
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (posVirgola == -999)
-                            {
-                                int diff = lunghezzaCopia % 3;
-                                lblResult.Text = "";
-                                i = 0;
-                                while (i != copia.Length)
-                                {
-                                    lblResult.Text += copia[i];
-                                    i++;
-                                    if(i==diff)
-                                    {
-                                        lblResult.Text += ".";
-                                    }
-                                    else if ((i-diff) % 3 == 0 && i != 0 && i!=copia.Length)
-                                    {
-                                        lblResult.Text += ".";
-                                    }
-                                }
+                             int diff = lunghezzaCopia % 3;
+                             lblResult.Text = "";
+                             i = 0;
+                             while (i != copia.Length)
+                             {
+                                 lblResult.Text += copia[i];
+                                 i++;
+                                 if(i==diff)
+                                 {
+                                     lblResult.Text += ".";
+                                 }
+                                 else if ((i-diff) % 3 == 0 && i != 0 && i!=copia.Length)
+                                 {
+                                     lblResult.Text += ".";
+                                 }
                             }
                         }
                         lavorando = false;
